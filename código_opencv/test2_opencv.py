@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import time
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH,1280)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT,720)
 Starus_esteria = "OFF"
@@ -43,7 +43,7 @@ while True:
     
 
     # Extraia a região de interesse
-    roi = red_mask[cy-1:cy+1, cx-100:cx+100]
+    roi = red_mask[cy-1:cy+1, cx-99:cx+100]
 
     # Calcule o centro dos pixels na ROI
     posicao_centro = np.argwhere(roi == 255)
@@ -74,7 +74,7 @@ while True:
             distancia_esquerdo = abs(centro_x - ponto_esquerdo_x)
             distancia_direito = abs(centro_x - ponto_direito_x)
 
-            cv2.putText(frame, f"Distância esquerda: {distancia_esquerdo}, Distância direita: {distancia_direito}", (0, 50), 2, 1, (0, 0, 255), 2)
+            #cv2.putText(frame, f"Distância esquerda: {distancia_esquerdo}, Distância direita: {distancia_direito}", (0, 50), 2, 1, (0, 0, 255), 2)
 
     # Verifique se há pixels brancos na ROI
     if len(posicao_centro) > 0:
@@ -85,8 +85,8 @@ while True:
         centro_y = np.mean(posicao_centro[:, 0])
 
         # Calcule a relação em relação ao centro da imagem
-        relacao = (centro_x - cx_roi ) / cx_roi
-        print(str(cx_roi) +"wewqeqw" + str(centro_x))
+        relacao = (int(centro_x) - cx_roi ) / cx_roi
+        cv2.putText(frame, f"Distancia x: {int(centro_x)}, Distancia y: {int(centro_y)}", (0, 50), 2, 1, (0, 0, 255), 2)
         print("Relação em relação ao centro da imagem (-1 a 1):", relacao)
     else:
         print("Nenhum pixel branco na região de interesse.")
