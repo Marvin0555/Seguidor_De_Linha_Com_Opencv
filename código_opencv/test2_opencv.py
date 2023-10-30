@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import time
 
-cap = cv2.VideoCapture(3)
+cap = cv2.VideoCapture(2)
 Starus_esteria = "OFF"
 
 while True:
@@ -25,8 +25,8 @@ while True:
     cv2.line(frame, (cx-100, cy), (cx+100, cy), (100, 30, 170), 3)
 
     # Red color
-    low_red = np.array([99, 108, 131]) #np.array([161, 155, 84])
-    high_red = np.array([180, 255, 255]) #np.array([179, 255, 255])
+    low_red = np.array([161, 155, 84])
+    high_red = np.array([179, 255, 255])
     red_mask = cv2.inRange(mask, low_red, high_red)
     
     #erosão e dilatação
@@ -48,7 +48,7 @@ while True:
     posicao_centro = np.argwhere(roi == 255)
 
     red_contours, _ = cv2.findContours(red_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    print(red_contours)
+    #print(red_contours)
     if red_contours:
         # Se houver contornos encontrados
         for cnt in red_contours:
@@ -63,7 +63,7 @@ while True:
                 area = moment['m00']
                 qcentro_x = int(moment['m10']/area)
                 qcentro_y = int(moment['m01']/area)
-                cv2.circle(frame, (220 + qcentro_x , qcentro_y), 10, (0,255,0), -1)
+                #cv2.circle(frame, (220 + qcentro_x , qcentro_y), 10, (0,255,0), -1)
 
 
         # Verifique se há pixels brancos na ROI
